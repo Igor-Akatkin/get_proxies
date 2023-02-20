@@ -1,10 +1,11 @@
+import json
 import requests
+import time
 
 from bs4 import BeautifulSoup as bs
 
 
-def get_ssl_proxies():
-    url = "https://free-proxy-list.net/"
+def get_ssl_proxies(url):
     soup = bs(requests.get(url).content, "lxml")
     proxies = []
 
@@ -15,13 +16,27 @@ def get_ssl_proxies():
             port = row.find_all("td")[1].text
             proxy = f"{ip}:{port}"
             proxies.append(proxy)
-
     return proxies
 
+def save_proxies(proxies):
+    # запись списка в txt
+    with open("ssl_proxies.txt", "w") as file:
+        print(*proxies, file=file, sep="\n")
+
+    # запись списка словарей в json
+    result_list = []
+    for proxy in proxies:
+        result_list.append(
+            {"proxy": proxy}
+        )
+
+    with open("ssl_proxies.json", "w", encoding="utf-8") as file:
+        json.dump(result_list, file, indent=4)
 
 def main():
-    proxy = get_ssl_proxies()
-    print(proxy)
+    url = "https://free-proxy-list.net/"
+    proxies = get_ssl_proxies(url)
+    save_proxies(proxies)
 
 if __name__ == "__main__":
     main()
