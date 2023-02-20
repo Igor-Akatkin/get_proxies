@@ -16,7 +16,6 @@ def get_ssl_proxies(url):
             port = row.find_all("td")[1].text
             proxy = f"{ip}:{port}"
             proxies.append(proxy)
-
     return proxies
 
 def save_proxies(proxies):
