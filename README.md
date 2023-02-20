@@ -1,5 +1,5 @@
 # Описание:
-Скрипт собирает и выдает список Https proxies с сайта https://free-proxy-list.net
+Скрипт собирает и выдает список Https proxies с сайта https://free-proxy-list.net <br/>
 Актуальная версия скрипта: get_ssl_proxies_v2.py
 
 # Формат выдачи результата:
@@ -9,4 +9,3 @@
 {
         "proxy": "ip:port"
     }
-
