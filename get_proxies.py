@@ -1,13 +1,12 @@
 import json
 import requests
-import time
 from random import choice
 
 from bs4 import BeautifulSoup as bs
 
 
-url = "https://free-proxy-list.net/"
-soup = bs(requests.get(url).content, "lxml")
+URL = "https://free-proxy-list.net/"
+SOUP = bs(requests.get(URL).content, "lxml")
 
 def get_https_proxies(soup):
     """
@@ -112,32 +111,17 @@ def get_one_random_https_proxy(soup):
     return choice(proxies)  # {'schema': 'ip:port'}
 
 
-def check_proxy(url):
-    """
-    Проверка прокси на доступность.
-    В параметр proxy необходимо добавить вызов одной из функций:
-    get_one_random_proxy(soup) - Получить 1 рандомный прокси вне зависимости от схемы
-    get_one_random_https_proxy(soup) - Получить 1 рандомный https прокси
-    """
-    proxy = get_one_random_proxy(soup)
-    r = requests.get(url, proxies=proxy, timeout=5)
-    print(r.json())
-
-
 def main():
     # Получить все прокси без привязки к схеме и сохранить в файлы:
-    get_all_proxies(soup)
+    get_all_proxies(SOUP)
     # Получить все https прокси и сохранить в файлы:
-    get_https_proxies(soup)
+    get_https_proxies(SOUP)
 
     # Получить один рандомный прокси без привязки к схеме
-    get_one_random_proxy(soup)
+    get_one_random_proxy(SOUP)
+    
     # Получить один https прокси
-    get_one_random_https_proxy(soup)
-
-    # Проверка
-    # check_proxy('http://httpbin.org/ip')
-    # check_proxy('https://api.ipify.org?format=json')
+    get_one_random_https_proxy(SOUP)
 
 if __name__ == "__main__":
     main()
